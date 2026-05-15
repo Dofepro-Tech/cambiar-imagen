@@ -4,6 +4,8 @@ import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 function normalizeBasePath(value: string | undefined) {
   if (!value || value === '/') {
     return '/';
@@ -22,61 +24,57 @@ export default defineConfig(({mode}) => {
 
   return {
     base,
-    plugins: [
-      react(),
-      tailwindcss(),
-      VitePWA({
-        injectRegister: false,
-        registerType: 'prompt',
-        manifest: false,
-        includeAssets: [
-          'LogoPrincipal.png',
-          'favicon-32x32.png',
-          'apple-touch-icon.png',
-          'icon-192.png',
-          'icon-512.png',
+    plugins: [react(), tailwindcss(), VitePWA({
+      injectRegister: false,
+      registerType: 'prompt',
+      manifest: false,
+      includeAssets: [
+        'LogoPrincipal.png',
+        'favicon-32x32.png',
+        'apple-touch-icon.png',
+        'icon-192.png',
+        'icon-512.png',
+      ],
+      workbox: {
+        cleanupOutdatedCaches: true,
+        navigateFallback: 'index.html',
+        runtimeCaching: [
+          {
+            urlPattern: ({ request, url }) => request.destination === 'document' && url.origin === self.location.origin,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'app-pages',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 7,
+              },
+            },
+          },
+          {
+            urlPattern: ({ request, url }) => ['script', 'style', 'worker'].includes(request.destination) && url.origin === self.location.origin,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'app-assets',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+          {
+            urlPattern: ({ request, url }) => request.destination === 'image' && url.origin === self.location.origin,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'app-images',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
         ],
-        workbox: {
-          cleanupOutdatedCaches: true,
-          navigateFallback: 'index.html',
-          runtimeCaching: [
-            {
-              urlPattern: ({ request, url }) => request.destination === 'document' && url.origin === self.location.origin,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'app-pages',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 7,
-                },
-              },
-            },
-            {
-              urlPattern: ({ request, url }) => ['script', 'style', 'worker'].includes(request.destination) && url.origin === self.location.origin,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'app-assets',
-                expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 60 * 60 * 24 * 30,
-                },
-              },
-            },
-            {
-              urlPattern: ({ request, url }) => request.destination === 'image' && url.origin === self.location.origin,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'app-images',
-                expiration: {
-                  maxEntries: 60,
-                  maxAgeSeconds: 60 * 60 * 24 * 30,
-                },
-              },
-            },
-          ],
-        },
-      }),
-    ],
+      },
+    }), cloudflare()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

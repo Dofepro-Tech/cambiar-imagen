@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 
-# Cuando tengas dominio propio, agrega aqui la URL absoluta de tu sitemap.
-# Sitemap: https://tudominio.com/sitemap.xml
+Sitemap: https://cambiar-imagen.dofeprotech.workers.dev/sitemap.xml
+
+# Cuando migres a un dominio propio, actualiza esta URL del sitemap.

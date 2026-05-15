@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Cuando tengas dominio propio, agrega aqui la URL absoluta de tu sitemap.
+# Sitemap: https://tudominio.com/sitemap.xml

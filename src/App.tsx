@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { LogoPrincipal } from './components/LogoPrincipal';
 import { ImageCompressor } from './components/ImageCompressor';
 import { PwaControls } from './components/PwaControls';
-import { Download, LogIn, Sun, Moon } from 'lucide-react';
+import { Download, LogIn, Sun, Moon, Github, Globe, Linkedin } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   platforms: string[];
@@ -181,6 +181,18 @@ function MainLayout() {
           <a href="./privacy.html" className="text-blue-500 hover:text-blue-400 hover:underline transition-colors">
             Politica de privacidad
           </a>
+          <span className="hidden sm:inline">•</span>
+          <div className="flex items-center gap-2">
+            <a href="https://dofepro.do" target="_blank" rel="noreferrer" aria-label="Sitio web dofepro.do" title="dofepro.do" className="inline-flex h-6 w-6 items-center justify-center rounded-full transition-colors hover:text-blue-400">
+              <Globe className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <a href="https://github.com/dofepro" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub" className="inline-flex h-6 w-6 items-center justify-center rounded-full transition-colors hover:text-blue-400">
+              <Github className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <a href="https://www.linkedin.com/in/domingo-feliz-dofepro-tech" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn" className="inline-flex h-6 w-6 items-center justify-center rounded-full transition-colors hover:text-blue-400">
+              <Linkedin className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </footer>
 

@@ -36,6 +36,7 @@ function Navbar({
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <a
               href="https://dofepro-tech.github.io/Mi-Portafolio/"
+              target="_self"
               aria-label="Volver al portafolio"
               title="Volver al portafolio"
               className="p-2 rounded-full transition-colors flex items-center justify-center"

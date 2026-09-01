@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { LogoPrincipal } from './components/LogoPrincipal';
 import { ImageCompressor } from './components/ImageCompressor';
 import { PwaControls } from './components/PwaControls';
-import { Download, LogIn, Sun, Moon, Github, Globe, Linkedin } from 'lucide-react';
+import { ArrowLeft, Download, LogIn, Sun, Moon, Github, Globe, Linkedin } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   platforms: string[];
@@ -34,6 +34,15 @@ function Navbar({
             <LogoPrincipal />
           </div>
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a
+              href="https://dofepro.do"
+              aria-label="Volver al portafolio"
+              title="Volver al portafolio"
+              className="p-2 rounded-full transition-colors flex items-center justify-center"
+              style={{ color: 'var(--text-main)', backgroundColor: 'var(--bg-overlay)' }}
+            >
+              <ArrowLeft size={20} />
+            </a>
             {canInstall && (
               <button
                 onClick={onInstall}
